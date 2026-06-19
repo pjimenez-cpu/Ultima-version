@@ -971,12 +971,15 @@ body.presenting section[data-label].current {
       </div>
 
       <div class="chart-wrap" style="flex:1; padding:24px 32px 16px; border:1px solid var(--n-200);">
+        <!-- Escala X: Jun25=x60, Ago25=x340, Oct25=x620, Dic25=x900, Feb26=x1180, Abr26=x1460, Jun26=x1580 → 4.59px/día desde Jun 25 -->
+        <!-- Escala Y: 0menciones=y330, 70menciones=y50 → factor=4px/mención. y=330-(val*4) -->
+        <!-- Picos: 7jul(x115,~35m,y190), 14ago(x290,~42m,y162), 19-28ago(x312-354,~38-46m), 11-12feb(x1121,~40m,y170), 20feb(x1162,70m,y50) -->
         <svg viewBox="0 0 1600 380" preserveAspectRatio="xMidYMid meet" style="width:100%; height:100%; display:block;">
           <defs>
-            <lineargradient id="volFill" x1="0" x2="0" y1="0" y2="1">
+            <linearGradient id="volFill" x1="0" x2="0" y1="0" y2="1">
               <stop offset="0%" stop-color="#0A0A0A" stop-opacity="0.18"></stop>
               <stop offset="100%" stop-color="#0A0A0A" stop-opacity="0.01"></stop>
-            </lineargradient>
+            </linearGradient>
           </defs>
 
           <!-- Gridlines Y -->
@@ -998,91 +1001,67 @@ body.presenting section[data-label].current {
           </g>
 
           <!-- Area fill -->
-          <!-- Escala: Y: 70 menciones → y=50, 0 menciones → y=330. Factor=(330-50)/70=4. y=330-(val*4) -->
-          <!-- Curva construida desde datos reales: base ~7 menciones/día, picos: 21jul(31), 8ago(33), 14ago(42), 19ago(46), 28ago(46), 21oct(60), 20feb(70), 12feb(40), 4mar(37) -->
           <path d="
-            M 60 330
-            C 80 330, 100 327, 130 322
-            C 160 317, 180 326, 210 324
-            C 240 322, 260 326, 290 320
-            C 310 316, 340 328, 370 326
-            C 400 324, 420 320, 445 328
-            C 460 325, 475 320, 490 316
-            C 510 312, 530 324, 555 318
-            C 565 314, 575 305, 585 202
-            C 592 168, 598 145, 605 198
-            C 615 240, 630 316, 650 320
-            C 665 316, 680 312, 695 198
-            C 703 162, 710 138, 717 198
-            C 724 240, 740 310, 760 318
-            C 775 312, 790 306, 805 162
-            C 812 130, 818 112, 825 162
-            C 832 200, 848 310, 868 316
-            C 878 312, 888 304, 898 138
-            C 904 110, 910 92, 917 138
-            C 924 175, 940 310, 960 318
-            C 975 314, 990 318, 1005 320
-            C 1012 320, 1018 320, 1025 320
-            C 1032 320, 1050 318, 1075 318
-            C 1090 316, 1105 312, 1120 320
-            C 1140 316, 1155 308, 1170 316
-            C 1185 320, 1200 318, 1220 316
-            C 1240 312, 1255 298, 1265 136
-            C 1272 105, 1278 80, 1285 136
-            C 1292 170, 1308 200, 1330 260
-            C 1345 230, 1355 196, 1365 152
-            C 1372 120, 1378 100, 1385 152
-            C 1392 185, 1405 280, 1420 310
-            C 1440 302, 1460 290, 1480 296
-            C 1500 308, 1520 314, 1545 318
-            C 1560 320, 1575 325, 1580 330
+            M 60 330 L 60 322
+            C 80 320, 100 295, 115 190
+            C 120 162, 126 162, 132 195
+            C 145 262, 168 312, 200 318
+            C 228 318, 262 316, 278 310
+            C 283 302, 287 252, 290 162
+            C 293 136, 297 128, 300 152
+            C 305 178, 310 208, 318 196
+            C 324 186, 330 160, 337 172
+            C 343 190, 350 218, 358 232
+            C 370 282, 395 312, 455 316
+            C 535 316, 578 315, 620 315
+            C 760 315, 862 315, 900 315
+            C 1002 315, 1062 315, 1082 315
+            C 1096 315, 1110 306, 1118 272
+            C 1120 248, 1122 196, 1125 172
+            C 1128 186, 1136 220, 1146 222
+            C 1151 218, 1158 140, 1162 50
+            C 1166 98, 1170 160, 1178 185
+            C 1184 204, 1194 200, 1204 200
+            C 1216 200, 1232 250, 1262 285
+            C 1302 310, 1362 314, 1422 315
+            C 1452 315, 1472 315, 1502 315
+            C 1540 316, 1562 317, 1580 318
             L 1580 330 Z
           " fill="url(#volFill)"></path>
 
           <!-- Línea curva -->
           <path d="
-            M 60 330
-            C 80 330, 100 327, 130 322
-            C 160 317, 180 326, 210 324
-            C 240 322, 260 326, 290 320
-            C 310 316, 340 328, 370 326
-            C 400 324, 420 320, 445 328
-            C 460 325, 475 320, 490 316
-            C 510 312, 530 324, 555 318
-            C 565 314, 575 305, 585 202
-            C 592 168, 598 145, 605 198
-            C 615 240, 630 316, 650 320
-            C 665 316, 680 312, 695 198
-            C 703 162, 710 138, 717 198
-            C 724 240, 740 310, 760 318
-            C 775 312, 790 306, 805 162
-            C 812 130, 818 112, 825 162
-            C 832 200, 848 310, 868 316
-            C 878 312, 888 304, 898 138
-            C 904 110, 910 92, 917 138
-            C 924 175, 940 310, 960 318
-            C 975 314, 990 318, 1005 320
-            C 1012 320, 1018 320, 1025 320
-            C 1032 320, 1050 318, 1075 318
-            C 1090 316, 1105 312, 1120 320
-            C 1140 316, 1155 308, 1170 316
-            C 1185 320, 1200 318, 1220 316
-            C 1240 312, 1255 298, 1265 136
-            C 1272 105, 1278 80, 1285 136
-            C 1292 170, 1308 200, 1330 260
-            C 1345 230, 1355 196, 1365 152
-            C 1372 120, 1378 100, 1385 152
-            C 1392 185, 1405 280, 1420 310
-            C 1440 302, 1460 290, 1480 296
-            C 1500 308, 1520 314, 1545 318
-            C 1560 320, 1575 325, 1580 330
+            M 60 322
+            C 80 320, 100 295, 115 190
+            C 120 162, 126 162, 132 195
+            C 145 262, 168 312, 200 318
+            C 228 318, 262 316, 278 310
+            C 283 302, 287 252, 290 162
+            C 293 136, 297 128, 300 152
+            C 305 178, 310 208, 318 196
+            C 324 186, 330 160, 337 172
+            C 343 190, 350 218, 358 232
+            C 370 282, 395 312, 455 316
+            C 535 316, 578 315, 620 315
+            C 760 315, 862 315, 900 315
+            C 1002 315, 1062 315, 1082 315
+            C 1096 315, 1110 306, 1118 272
+            C 1120 248, 1122 196, 1125 172
+            C 1128 186, 1136 220, 1146 222
+            C 1151 218, 1158 140, 1162 50
+            C 1166 98, 1170 160, 1178 185
+            C 1184 204, 1194 200, 1204 200
+            C 1216 200, 1232 250, 1262 285
+            C 1302 310, 1362 314, 1422 315
+            C 1452 315, 1472 315, 1502 315
+            C 1540 316, 1562 317, 1580 318
           " fill="none" stroke="#0A0A0A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
 
-          <!-- Peak annotation · 20 feb 2026 · x≈1022 -->
-          <line x1="1022" x2="1022" y1="55" y2="335" stroke="#FF5A1F" stroke-width="1.5" stroke-dasharray="3 5"></line>
-          <circle cx="1022" cy="72" r="5" fill="#FF5A1F"></circle>
-          <rect x="870" y="34" width="304" height="34" fill="#FF5A1F" rx="3"></rect>
-          <text x="882" y="57" fill="white" font-family="Inter" font-weight="700" font-size="13" letter-spacing="0.06em">20 FEB 2026 · PEAK 70 MENCIONES</text>
+          <!-- Peak annotation · 20 feb 2026 -->
+          <line x1="1162" x2="1162" y1="55" y2="335" stroke="#FF5A1F" stroke-width="1.5" stroke-dasharray="3 5"></line>
+          <circle cx="1162" cy="52" r="5" fill="#FF5A1F"></circle>
+          <rect x="1010" y="34" width="304" height="34" fill="#FF5A1F" rx="3"></rect>
+          <text x="1022" y="57" fill="white" font-family="Inter" font-weight="700" font-size="13" letter-spacing="0.06em">20 FEB 2026 · PEAK 70 MENCIONES</text>
 
           <!-- X axis labels -->
           <g font-family="Inter" font-size="13" fill="#5C5C59" text-anchor="middle">
@@ -1096,10 +1075,10 @@ body.presenting section[data-label].current {
           </g>
 
           <!-- Picos secundarios anotados -->
-          <text x="590" y="44" font-family="Inter" font-size="11" fill="#5C5C59" text-anchor="middle">7 Jul</text>
-          <text x="820" y="104" font-family="Inter" font-size="11" fill="#5C5C59" text-anchor="middle">14 Ago</text>
-          <text x="912" y="84" font-family="Inter" font-size="11" fill="#5C5C59" text-anchor="middle">19–28 Ago</text>
-          <text x="1280" y="74" font-family="Inter" font-size="11" fill="#5C5C59" text-anchor="middle">11–12 Feb</text>
+          <text x="115" y="44" font-family="Inter" font-size="11" fill="#5C5C59" text-anchor="middle">7 Jul</text>
+          <text x="290" y="118" font-family="Inter" font-size="11" fill="#5C5C59" text-anchor="middle">14 Ago</text>
+          <text x="337" y="100" font-family="Inter" font-size="11" fill="#5C5C59" text-anchor="middle">19–28 Ago</text>
+          <text x="1122" y="118" font-family="Inter" font-size="11" fill="#5C5C59" text-anchor="middle">11–12 Feb</text>
         </svg>
       </div>
 
